@@ -7,12 +7,12 @@ migrations:
 migrate:
 	python3 manage.py migrate
 
-initialscrap:
+jobscrap:
 	@[ "${platform}" ] || ( echo ">> Platform to initialize scrapping not set"; exit 1 )
 	if [ $(platform) = freelancermap ]; then \
-        python3 manage.py initialscrap -p $(platform) -e $(email) -pwd $(pass) -l $(location) -t $(title); \
+        python3 manage.py jobscrap -p $(platform) -e $(email) -pwd $(pass) -l $(location) -t $(title); \
     else \
-				python3 manage.py initialscrap -p $(platform) -l $(location) -t $(title); \
+				python3 manage.py jobscrap -p $(platform) -l $(location) -t $(title); \
 		fi
 
 celery:
