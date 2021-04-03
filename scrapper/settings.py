@@ -181,6 +181,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Configure Django App for Heroku.
 django_heroku.settings(locals())
 
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'scrapper.pagination.CustomPagination',
+    'PAGE_SIZE': 10,
+}
 CORS_ALLOWED_ORIGINS = config("CORS_ALLOWED_ORIGINS", cast=Csv())
 CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS", cast=Csv())
 
