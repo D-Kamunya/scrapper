@@ -47,6 +47,15 @@ DATABASES['default'].update(db_from_env)
 
 # ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
+# celery
+CELERY_BROKER_URL = config('CELERY_BROKER_URL', '')
+CELERY_RESULT_BACKEND = config('CELERY_BROKER_URL', '')
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Africa/Nairobi'
+# CELERY_TASK_SOFT_TIME_LIMIT = 60
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
