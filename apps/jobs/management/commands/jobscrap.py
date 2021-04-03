@@ -10,7 +10,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         # Named (optional) arguments
-        parser.add_argument('-p', '--platform', type=str, help='Initialize scrapping f platform specified')
+        parser.add_argument('-p', '--platform', type=str, help='Initialize scrapping of platform specified')
         parser.add_argument('-e', '--email', type=str, help='Email user to login')
         parser.add_argument('-pwd', '--password', type=str, help='Password user to login')
         parser.add_argument('-l', '--location', type=str, help='Scrap paramater', nargs='?', default='')

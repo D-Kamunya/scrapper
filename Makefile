@@ -16,7 +16,7 @@ jobscrap:
 		fi
 
 celery:
-	celery -A indeed  worker -B -l info
+	celery -A scrapper  worker -B -l info
 
 superuser:
 	python manage.py createsuperuser
