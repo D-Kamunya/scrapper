@@ -47,6 +47,7 @@ export DJANGO_SETTINGS_MODULE='indeed.settings'
 - Run `redis-server`
 - Activate environment `source .env` and run `make celery`
 - Activate environment `source .env` and run `make serve`
+### Scrap jobs
 - To scrap from indeed platform run `make jobscrap platform=indeed`
 - To scrap from dasauge platform run `make jobscrap platform=dasauge`
 - To scrap from google platform run `make jobscrap platform=google`
@@ -56,4 +57,4 @@ export DJANGO_SETTINGS_MODULE='indeed.settings'
   use `+` to join the words i.e. use `title=software+engineering`
 ## Starting the server
 - Ensure you are in the project directory on the same level with `manage.py` and the virtual environment is activated
-- Run the server `python manage.py runserver`
+- Run the server `python manage.py runserver` or `make serve` 
