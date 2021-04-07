@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from apps.movies.tasks.tvshows4mobile_tasks  import download_movie
+from apps.movies.tasks.tvshows4mobile_tasks  import download_tvshows4mobile_movie
 
 class Command(BaseCommand):
     help = 'Download movies'
@@ -49,14 +49,13 @@ class Command(BaseCommand):
         
         if episode == None:
             while True:
-                episode =( input
+                episodes =( input
                 ('Enter season episode to download in two digits i.e. 01,02,11,... \n'))
-                if len(season)<2:
-                    print("Wrong episode format.Write in tens")
-                else:
-                    if episode.isdecimal():
-                        break
+                episodes = episodes.split(',')
+                for ep in episodes:
+                    if len(ep)==2 and ep.isdecimal():
+                        download_tvshows4mobile_movie.delay(site, title, season, ep)
+                        print(f'Download scheduled for episode {ep}')
                     else:
-                        print('Wrong episode format.Should only contain numbers')
-
-        download_movie(site, title, season, episode)
+                        print(f'Wrong episode format {ep}.')
+           

@@ -76,14 +76,14 @@ def decode_captcha(wait,driver,mainWindowHandle):
     download_btn.click()
     return page
 
-@celery_app.task(name="Download movie", serializer='json')
-def download_movie(site, title, season, episode):
+@celery_app.task(name="Download tvshows4mobile movie", serializer='json')
+def download_tvshows4mobile_movie(site, title, season, episode):
     try:
 
         # Add additional Options to the webdriver
         chrome_options = Options()
         # add the argument and make the browser Headless.
-        # chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--headless")
         p = {
          'download.default_directory':'/home/kinc/Downloads'}
         chrome_options.add_experimental_option('prefs', p)
@@ -141,7 +141,7 @@ def download_movie(site, title, season, episode):
             mov.click()
         except Exception as e:
             logging.warning(e)
-            print('Movie not found')
+            print(f'Movie {title} not found')
 
        
         # Get the season and click it
@@ -155,7 +155,7 @@ def download_movie(site, title, season, episode):
                 seasonn = driver.find_element_by_partial_link_text(f"Season {season}").click()
             except Exception as e:
                 logging.warning(e)
-                print('Season not found')
+                print(f'Season {season} not found')
 
         
         # Get the episode and click it
@@ -177,7 +177,7 @@ def download_movie(site, title, season, episode):
                         driver.switch_to_window(mainWindowHandle)
                     except Exception as e:
                         logging.warning(e)
-                        print('Episode not found')
+                        print(f'Episode {episode} not found')
                         break
 
 
