@@ -150,11 +150,20 @@ def download_movie(site, title, season, episode):
         if episode == 'all':
             pass
         else:
-            try:
-                episodee = driver.find_element_by_partial_link_text(f"Episode {episode}").click()
-            except Exception as e:
-                logging.warning(e)
-                print('Episode not found')
+            while True:
+                try:
+                    episodee = driver.find_element_by_partial_link_text(f"Episode {episode}").click()
+                    break
+                except:
+                    try:
+                        next_btn = driver.find_element_by_partial_link_text('Next').click()
+                        wait.until(EC.visibility_of_all_elements_located((By.XPATH, '//div[contains(@class,"data")]')))
+                        driver.execute_script("window.stop();")
+                        driver.switch_to_window(mainWindowHandle)
+                    except Exception as e:
+                        logging.warning(e)
+                        print('Episode not found')
+                        break
 
 
         # Get the movie quality and click it
@@ -185,11 +194,11 @@ def download_movie(site, title, season, episode):
 
         # Get movie video url
         video_url = driver.current_url
-        # driver.quit()
+        driver.quit()
 
         # Start video download and show progress
         try:
-            Getter().get(driver.current_url, f"/mnt/4df6fa89-cc6d-4302-b1bb-569190748cb2/movies/{title} - S{season}E{episode}")
+            Getter().get(video_url, f"/mnt/4df6fa89-cc6d-4302-b1bb-569190748cb2/movies/{title} - S{season}E{episode}")
             print('Finished downloading movie')
         except Exception as e:
             logging.warning(e)
