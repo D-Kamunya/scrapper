@@ -120,10 +120,25 @@ def download_movie(site, title, season, episode):
         # Get the ID of the main open window
         mainWindowHandle = driver.current_window_handle
         try:
-            movie = driver.find_element_by_xpath(f"//a[contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), '{title}')]")
+            movies = driver.find_elements_by_xpath(f"//a[contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), '{title}')]")
             # movie = driver.find_element_by_partial_link_text(title)
-            title = movie.text
-            movie.click()
+            if len(movies)>1:
+                opts = []
+                print('Choose series from list')
+                for idx, m in enumerate(movies):
+                    opts.append(str(idx+1))
+                    print(f"{idx+1}.{m.text}")
+                while True:
+                    movie = input()
+                    if movie not in opts:
+                        print('Invalid choice')
+                    else:
+                        mov = movies[int(movie)-1]
+                        break
+            else:
+                mov = movies[0]
+            title = mov.text
+            mov.click()
         except Exception as e:
             logging.warning(e)
             print('Movie not found')
