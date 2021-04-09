@@ -2,8 +2,9 @@
 import logging
 import math
 from time import sleep, time
-import os
+import os, sys
 from io import BytesIO
+from threading import Lock
 
 from django.utils import timezone
 from decouple import config
@@ -12,8 +13,6 @@ from pytesseract import image_to_string
 from urllib.request import urlretrieve
 from progress.bar import Bar
 from progress.spinner import Spinner
-
-from scrapper import celery_app
 
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
@@ -28,6 +27,7 @@ import selenium.webdriver.common.keys
 capa = DesiredCapabilities.CHROME
 capa["pageLoadStrategy"] = "none"
 
+lock = Lock()
 # Class to download video url and show progress
 class Getter:
     def get(self, url, to):
@@ -76,8 +76,11 @@ def decode_captcha(wait,driver,mainWindowHandle):
     download_btn.click()
     return page
 
-@celery_app.task(name="Download tvshows4mobile movie", serializer='json')
+# @celery_app.task(name="Download tvshows4mobile movie", serializer='json')
 def download_tvshows4mobile_movie(site, title, season, episode):
+    
+    print(f'Download scheduled for episode {episode}')
+
     try:
 
         # Add additional Options to the webdriver
@@ -213,11 +216,11 @@ def download_tvshows4mobile_movie(site, title, season, episode):
 
         # Start video download and show progress
         try:
-            Getter().get(video_url, f"/mnt/4df6fa89-cc6d-4302-b1bb-569190748cb2/movies/{title} - S{season}E{episode}")
-            print('Finished downloading movie')
+            Getter().get(video_url, f"/mnt/4df6fa89-cc6d-4302-b1bb-569190748cb2/movies/{title} - S{season}E{episode}.mp4")
+            print(f'Finished downloading {title} - S{season}E{episode}.mp4')
         except Exception as e:
             logging.warning(e)
-            print('Failed load video url')
+            print('Failed load video {title} - S{season}E{episode}.mp4')
 
     except Exception as e:
         logging.warning(e)

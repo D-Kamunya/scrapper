@@ -1,5 +1,8 @@
 from django.core.management.base import BaseCommand, CommandError
+from threading import Thread
 from apps.movies.tasks.tvshows4mobile_tasks  import download_tvshows4mobile_movie
+
+
 
 class Command(BaseCommand):
     help = 'Download movies'
@@ -16,6 +19,11 @@ class Command(BaseCommand):
         title = options['title']
         season = options['season']
         episode = options['episode']
+
+        # Number of browsers to run
+        nbr_threads = 6
+
+        threads = []
         if site == None:
             while True:
                 site =( input
@@ -52,10 +60,17 @@ class Command(BaseCommand):
                 episodes =( input
                 ('Enter season episode to download in two digits i.e. 01,02,11,... \n'))
                 episodes = episodes.split(',')
-                for ep in episodes:
+                for i, ep in enumerate(episodes):
                     if len(ep)==2 and ep.isdecimal():
-                        download_tvshows4mobile_movie.delay(site, title, season, ep)
-                        print(f'Download scheduled for episode {ep}')
+                        x = Thread(target=download_tvshows4mobile_movie, args=(site, title, season, ep))
+                        x.start()
+                        threads.append(x)
+                        if (i+1) % nbr_threads == 0:
+                            for th in threads:
+                                th.join()
+                            threads = []
                     else:
                         print(f'Wrong episode format {ep}.')
+                for th in threads:
+                    th.join()
            
