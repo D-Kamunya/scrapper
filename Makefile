@@ -15,6 +15,9 @@ jobscrap:
 				python3 manage.py jobscrap -p $(platform) -l $(location) -t $(title); \
 		fi
 
+movie:
+	python3 manage.py moviedownloader -s $(site) -t $(title) -se $(season) -ep $(episode)
+
 celery:
 	celery -A scrapper  worker -B -l info
 
@@ -34,3 +37,4 @@ set_env_vars:
 	source venv/bin/activate;
 
 .PHONY: set_env_vars
+				movie clean
