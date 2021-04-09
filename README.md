@@ -17,7 +17,7 @@ These instructions will get you a copy of the project up and running in your loc
 - [Git](https://git-scm.com/download/)
 - [Python 3.6 and above](https://www.python.org/downloads/)
 - [PostgreSQL](https://www.postgresql.org/)
-- [tesseract-ocr]
+- [tesseract-ocr](https://github.com/tesseract-ocr/tesseract/)
 
 
 ## Installing
