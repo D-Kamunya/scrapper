@@ -41,6 +41,7 @@ export DB_HOST=''
 export MODE='dev'
 export ALLOWED_HOSTS=''
 export DISABLE_COLLECTSTATIC=1
+export DOWNLOAD_LOC=
 # celery
 export CELERY_BROKER_URL=""
 export CELERY_RESULT_BACKEND=""
