@@ -22,11 +22,11 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
-import selenium.webdriver.common.keys
 # Add capabilities to browser
 capa = DesiredCapabilities.CHROME
 capa["pageLoadStrategy"] = "none"
 
+download_loc = os.getenv("DOWNLOAD_LOC")
 lock = Lock()
 # Class to download video url and show progress
 class Getter:
@@ -88,7 +88,7 @@ def download_tvshows4mobile_movie(site, title, season, episode):
         # add the argument and make the browser Headless.
         chrome_options.add_argument("--headless")
         p = {
-         'download.default_directory':'/home/kinc/Downloads'}
+         'download.default_directory':f'{download_loc}'}
         chrome_options.add_experimental_option('prefs', p)
         chrome_options.add_argument("--window-size=1920x1080")
         chrome_options.add_argument("--disable-notifications")
@@ -216,7 +216,7 @@ def download_tvshows4mobile_movie(site, title, season, episode):
 
         # Start video download and show progress
         try:
-            Getter().get(video_url, f"/mnt/4df6fa89-cc6d-4302-b1bb-569190748cb2/movies/{title} - S{season}E{episode}.mp4")
+            Getter().get(video_url, f"{download_loc}{title} - S{season}E{episode}.mp4")
             print(f'Finished downloading {title} - S{season}E{episode}.mp4')
         except Exception as e:
             logging.warning(e)

@@ -1,4 +1,14 @@
-# Scrapper
+# JOBS SCRAPPING AND MOVIE DOWNLOAD AUTOMATION
+####  A python application to scrap jobs from different websites and also automate movie downloads
+
+## Author
+[Dennis Kamunya](https://github.com/D-Kamunya)
+
+## Features
+Here are the features in summary:
+* Scrap jobs  from various websites(indeed.com,freelancermap.de,dasauge,google jobs).
+* Provide acces to scrapped jobs via an API
+* Automate tv shows downloads from tvshows4mobile.com.
 
 ## Getting started
 These instructions will get you a copy of the project up and running in your local machine for development and testing purposes.
@@ -7,6 +17,7 @@ These instructions will get you a copy of the project up and running in your loc
 - [Git](https://git-scm.com/download/)
 - [Python 3.6 and above](https://www.python.org/downloads/)
 - [PostgreSQL](https://www.postgresql.org/)
+- [tesseract-ocr]
 
 
 ## Installing
@@ -40,7 +51,7 @@ export DJANGO_SETTINGS_MODULE='indeed.settings'
 - Install dependencies to your virtual environment `pip install -r requirements.txt`
 - Migrate changes to the newly created database `python manage.py migrate`
 
-## Running scrappers
+## Running job scrappers
 - Install redis on your machine
 - Run the following commands in separate tabs to scrap from different platforms
 
@@ -55,6 +66,13 @@ export DJANGO_SETTINGS_MODULE='indeed.settings'
 - To scrap with job title and job location filters add `location=<job_location>` or/and `title=<job_title>`  
 - N/B To use filter a location or title which is a string e.g `title=software engineering`
   use `+` to join the words i.e. use `title=software+engineering`
+
+## Automate movie downloads from tvshows4mobile.com
+- To download your favourite tv show activate environment `source .env` and run `make movie`
+- For more precise movie search enter series name by its name
+- Enter series season to download
+- Enter season episodes to download
+
 ## Starting the server
 - Ensure you are in the project directory on the same level with `manage.py` and the virtual environment is activated
 - Run the server `python manage.py runserver` or `make serve` 
